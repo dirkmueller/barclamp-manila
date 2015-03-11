@@ -1,0 +1,32 @@
+= attributes_for @proposal do
+  .panel-sub
+    = header show_raw_deployment?, true
+
+  .panel-body
+    %script#backend_entries{ :type => "text/x-handlebars-template" }
+      %div#manila_backends
+        {{#each entries}}
+        %ul.list-group(id="share-entry-{{@index}}")
+          %li.list-group-item.active
+            %h3.list-group-item-heading
+              Backend: {{ backend_name }}
+              {{#if ../is_only_backend }}
+              {{else}}
+              = link_to icon_tag("trash"), "#", :class => "share-backend-delete pull-right delete", "data-shareid" => "{{@index}}"
+              {{/if}}
+          {{#if_eq backend_driver 'generic'}}
+          %li.list-group-item
+            %fieldset
+              %legend
+                = t('.shares.generic_parameters')
+
+              = string_field %w(shares {{@index}} generic share_name)
+
+          {{/if_eq}}
+
+    %fieldset
+      %legend
+        = t(".shares.listheader")
+
+      %div#share_backends
+        = t(".shares.loading_text")

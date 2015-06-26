@@ -1,5 +1,6 @@
 #
-# Copyright 2015 SUSE Linux GmbH
+# Copyright 2011-2013, Dell
+# Copyright 2013-2014, SUSE LINUX Products GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,18 +16,18 @@
 #
 
 begin
-  require "sprockets/standalone"
+  require 'sprockets/standalone'
 
   Sprockets::Standalone::RakeTask.new(:assets) do |task, sprockets|
     task.assets = [
-      "**/application.js"
+      '**/application.js'
     ]
 
     task.sources = [
-      "crowbar_framework/app/assets/javascripts"
+      'crowbar_framework/app/assets/javascripts'
     ]
 
-    task.output = "crowbar_framework/public/assets"
+    task.output = 'crowbar_framework/public/assets'
 
     task.compress = true
     task.digest = true
@@ -39,7 +40,7 @@ begin
     def available_assets
       Pathname.glob(
         File.expand_path(
-          "../crowbar_framework/public/assets/**/*",
+          '../crowbar_framework/public/assets/**/*',
           __FILE__
         )
       )
@@ -97,17 +98,15 @@ begin
 rescue
 end
 
-require "rspec/core/rake_task"
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = "--pattern **/*_spec.rb"
+task :syntaxcheck do
+  system('for f in `find -name \*.rb`; do echo -n "Syntaxcheck $f: "; ruby -c $f || exit $? ; done')
+  exit $?.exitstatus
 end
 
-require "rubocop/rake_task"
-
-RuboCop::RakeTask.new
-
-task default: [
-  :rubocop,
-  :spec
+task :default => [
+  :spec,
+  :syntaxcheck
 ]

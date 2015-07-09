@@ -66,6 +66,8 @@ if neutron_servers.length > 0
   neutron_service_password = neutron_server[:neutron][:service_password]
   Chef::Log.info("Neutron server at #{neutron_server_host}")
 else
+  neutron_insecure = nil
+  neutron_protocol = nil
   neutron_server_host = nil
   neutron_server_port = nil
   neutron_service_user = nil

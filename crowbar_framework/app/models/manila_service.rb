@@ -34,7 +34,6 @@ class ManilaService < ServiceObject
         "cluster" => true,
         "admin" => false,
         "exclude_platform" => {
-          # "suse" => "12.0",
           "windows" => "/.*/"
         },
       },
@@ -43,7 +42,6 @@ class ManilaService < ServiceObject
         "count" => -1,
         "admin" => false,
         "exclude_platform" => {
-          # "suse" => "12.0",
           "windows" => "/.*/"
         }
       }
@@ -53,8 +51,11 @@ end
 
   def proposal_dependencies(role)
     answer = []
-    # FIXME(toabctl): Add Nova, Cinder, Glance for generic driver here!
-    deps = ["database", "keystone", "rabbitmq"]
+    # NOTE(toabctl): nova, cinder, glance and neutron are just needed
+    # for the generic driver. So this could be optional depending on the used
+    # driver
+    deps = ["database", "keystone", "rabbitmq",
+            "nova", "cinder", "glance", "neutron"]
     deps.each do |dep|
       answer << {
         "barclamp" => dep,

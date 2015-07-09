@@ -35,7 +35,10 @@ barclamp:
     - 'database'
     - 'rabbitmq'
     - 'keystone'
+    - 'nova'
+    - 'cinder'
     - 'glance'
+    - 'neutron'
   member:
     - 'openstack'
 

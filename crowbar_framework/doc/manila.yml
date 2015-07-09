@@ -18,7 +18,7 @@ root:
   topic_meta_data:
     author: 'Multiple authors'
     license: 'Apache 2'
-    copyright: '2014 by Dell, Inc'
+    copyright: '2015 SUSE Linux GmbH'
     date: 'June 1, 2012'
     order: 'alpha'
     url: '/crowbar/modules/1.0'
